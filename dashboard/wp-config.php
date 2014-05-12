@@ -15,23 +15,58 @@
  */
 
 // ** MySQL settings - You can get this info from your web host ** //
+$environments = array(
+    'development' => 'dev.',
+    'staging' => 'stage.'
+);
+// Get Server name
+$server_name = $_SERVER['SERVER_NAME'];
+
+foreach($environments AS $key => $env){
+    if(strstr($server_name, $env)){
+        define('ENVIRONMENT', $key);
+        break;
+    }
+}
+
+// If no environment is set default to production
+if(!defined('ENVIRONMENT')) define('ENVIRONMENT', 'production');
+
+// Define different DB connection details depending on environment
+switch(ENVIRONMENT){
+    case 'development':
+        define('DB_NAME', 'wp-bootstrap');
+        define('DB_USER', 'root');
+        define('DB_PASSWORD', 'root');
+        define('DB_HOST', 'localhost');
+    break;
+    case 'staging':
+        define('DB_NAME', 'wp-bootstrap');
+        define('DB_USER', 'root');
+        define('DB_PASSWORD', 'root');
+        define('DB_HOST', 'localhost');
+    break;
+}
+// If database isn't defined then it will be defined here.
+// Put the details for your production environment in here.
+
 /** The name of the database for WordPress */
-define('DB_NAME', 'wp-bootstrap');
+if(!defined('DB_NAME'))define('DB_NAME', 'wp-bootstrap');
 
 /** MySQL database username */
-define('DB_USER', 'root');
+if(!defined('DB_USER')) define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'root');
+if(!defined('DB_PASSWORD')) define('DB_PASSWORD', 'root');
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+if(!defined('DB_HOST')) define('DB_HOST', 'localhost');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', 'utf8');
+if(!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
-define('DB_COLLATE', '');
+if(!defined('DB_COLLATE')) define('DB_COLLATE', '');
 
 /**#@+
  * Authentication Unique Keys and Salts.
